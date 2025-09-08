@@ -2,8 +2,8 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: '/my-portfolio',       // リポジトリ名に置き換えてください
-  assetPrefix: '/my-portfolio/',   // 同じくリポジトリ名
-}
+  basePath: '/my-portfolio',      // GitHub Pagesのリポジトリ名に合わせて
+  assetPrefix: '/my-portfolio/',
+};
 
-export default nextConfig
+export default nextConfig;
