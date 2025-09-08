@@ -1,34 +1,41 @@
 name: CI  # Continuous Integration（継続的インテグレーション）ワークフロー名
 
+# トリガー設定：main, developへのpush、すべてのPRで発火
 on:
   push:
     branches:
-      - main   # mainブランチへのpushがトリガー
-      - develop  # developブランチへのpushもトリガー
-  pull_request:  # 全てのプルリクエストがトリガー
+      - main     # mainブランチへのpush
+      - develop  # developブランチへのpush
+  pull_request:  # すべてのPR
 
 jobs:
   test-and-lint:
     runs-on: ubuntu-latest  # 最新のUbuntu環境で実行
 
     steps:
-      # リポジトリのコードをチェックアウト（取得）
-      - uses: actions/checkout@v3
+      # リポジトリのソースコードをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      # Node.jsのセットアップ（バージョン18を指定）
-      - uses: actions/setup-node@v3
+      # Node.js v18をセットアップ
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # npmパッケージの依存関係をインストール
-      - run: npm install
+      # npm依存関係のインストール
+      - name: Install dependencies
+        run: npm install
+        working-directory: .  # プロジェクトルートで実行
 
-      # ESLintを実行し、コードの静的解析（lint）を行う
-      - run: npm run lint
+      # ESLintで静的コード解析を実行
+      - name: Run ESLint
+        run: npm run lint
+        working-directory: .
 
       # Jestでテストを実行
-      # ts-nodeを使ってTypeScript製のjest.config.tsを読み込めるように環境変数をセット
+      # ts-node/esmを使ってTypeScriptのJest設定を読み込めるようにする
       - name: Run tests
         run: npm test
         env:
-          NODE_OPTIONS: "--loader ts-node/esm"  # ts-nodeのESMローダーを有効化
+          NODE_OPTIONS: "--loader ts-node/esm"
