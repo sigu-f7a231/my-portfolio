@@ -1,35 +1,36 @@
-name: Deploy to GitHub Pages  # GitHub Pagesへの自動デプロイワークフロー名
+name: Deploy to GitHub Pages  # GitHub Pagesへの自動デプロイ
 
-# mainブランチへのpushをトリガーに実行
 on:
   push:
     branches:
-      - main
+      - main  # mainブランチへのpushで実行
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest  # Ubuntuの最新環境で実行
+    runs-on: ubuntu-latest  # 最新のUbuntu環境で実行
 
     steps:
-      # リポジトリのコードをチェックアウト（取得）
-      - uses: actions/checkout@v3
+      # リポジトリのコードをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      # Node.jsのセットアップ（バージョン18を指定）
-      - uses: actions/setup-node@v3
+      # Node.js v18をセットアップ
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # 依存パッケージをインストール
-      - run: npm install
+      # npm依存関係をインストール
+      - name: Install dependencies
+        run: npm install
 
-      # Next.jsアプリをビルドして静的ファイルを生成
-      - run: npm run build
+      # Next.jsアプリをビルド（静的ファイル生成）
+      - name: Build static site
+        run: npm run build
 
-      # 静的ファイルをGitHub Pagesに公開
+      # GitHub Pagesにデプロイ
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          # GitHub Actionsの自動トークンを利用
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # GitHub Pagesに公開するディレクトリ
           publish_dir: ./out

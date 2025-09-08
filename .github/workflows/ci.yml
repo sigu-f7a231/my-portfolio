@@ -1,6 +1,5 @@
-name: CI  # Continuous Integration（継続的インテグレーション）ワークフロー名
+name: CI  # Continuous Integration（継続的インテグレーション）
 
-# トリガー設定：main, developへのpush、すべてのPRで発火
 on:
   push:
     branches:
@@ -26,7 +25,12 @@ jobs:
       # npm依存関係のインストール
       - name: Install dependencies
         run: npm install
-        working-directory: .  # プロジェクトルートで実行
+        working-directory: .
+
+      # 利用可能なnpmスクリプトを表示（デバッグ目的）
+      - name: List available npm scripts
+        run: npm run
+        working-directory: .
 
       # ESLintで静的コード解析を実行
       - name: Run ESLint
