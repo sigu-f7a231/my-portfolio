@@ -1,26 +1,27 @@
 # My Portfolio
 
+## 概要
+Next.js と TypeScript を使ったポートフォリオサイトです。  
+GitHub Pages に自動デプロイされる設定が含まれています。
+
+---
+
 ## 技術スタック
 
-- **フレームワーク**: Next.js 15.5.2
-- **言語**: TypeScript
-- **スタイル**: Tailwind CSS
-- **ホスティング**: GitHub Pages
-- **CI/CD**: GitHub Actions (自動テスト・自動デプロイ)
+| 分類         | 技術・ツール                |
+| ------------ | --------------------------- |
+| フレームワーク | Next.js (v15.5.2)            |
+| 言語         | TypeScript (v5)             |
+| スタイリング  | Tailwind CSS (v4)           |
+| テスト       | Jest, React Testing Library  |
+| デプロイ     | GitHub Pages, GitHub Actions |
+| CI/CD        | GitHub Actions              |
 
 ---
 
-## プロジェクト概要
+## セットアップ
 
-Next.js + TypeScript + Tailwind CSS で作成したポートフォリオサイトです。  
-GitHub Pages で公開しており、GitHub Actions を利用して自動テストと自動デプロイを実現しています。
-
----
-
-## 開発手順
-
-### 開発サーバー起動
+### 依存関係のインストール
 
 ```bash
 npm install
-npm run dev
