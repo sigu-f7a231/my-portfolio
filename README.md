@@ -9,7 +9,7 @@ GitHub Pagesでホスティングし、自動ビルド・自動デプロイのCI
 
 ## サイトURL
 
-[https://github.com/sigu-f7a231/portfolio-site/](https://github.com/sigu-f7a231/portfolio-site/)
+[https://sigu-f7a231.github.io/portfolio-site/](https://sigu-f7a231.github.io/portfolio-site/)
 
 ---
 
