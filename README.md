@@ -2,8 +2,9 @@
 
 ## 概要
 
-このリポジトリは、Next.jsとTypeScript、Tailwind CSSを使ったポートフォリオサイトです。  
-GitHub Pagesでホスティングし、自動ビルド・自動デプロイのCI/CDをGitHub Actionsで構築しています。
+このリポジトリは、Next.jsとTypeScript、Tailwind CSSを使って作成したポートフォリオサイトです。  
+静的サイト生成（SSG）に対応しており、GitHub Pagesでホスティングしています。  
+CI/CDはGitHub Actionsで自動ビルド・自動デプロイを実現しています。
 
 ---
 
