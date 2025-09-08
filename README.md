@@ -12,7 +12,7 @@ Next.js + TypeScript + Tailwind CSS で作成。GitHub Pagesでホスティン�
 
 ## デモ
 
-[GitHub Pagesで公開中のサイトURL](https://username.github.io/my-portfolio)
+[GitHub Pagesで公開中のサイトURL](https://sigu-f7a231.github.io/portfolio-site/)
 
 ---
 
