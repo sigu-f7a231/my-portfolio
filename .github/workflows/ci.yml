@@ -1,16 +1,15 @@
 name: CI  # Continuous Integration（継続的インテグレーション）ワークフロー名
 
-# main・developブランチへのpushやプルリクエストが対象
 on:
   push:
     branches:
-      - main
-      - develop
-  pull_request:
+      - main   # mainブランチへのpushがトリガー
+      - develop  # developブランチへのpushもトリガー
+  pull_request:  # 全てのプルリクエストがトリガー
 
 jobs:
   test-and-lint:
-    runs-on: ubuntu-latest  # Ubuntuの最新環境で実行
+    runs-on: ubuntu-latest  # 最新のUbuntu環境で実行
 
     steps:
       # リポジトリのコードをチェックアウト（取得）
@@ -21,11 +20,15 @@ jobs:
         with:
           node-version: '18'
 
-      # 依存パッケージをインストール
+      # npmパッケージの依存関係をインストール
       - run: npm install
 
-      # ESLintでコードの静的解析（lint）を実行
+      # ESLintを実行し、コードの静的解析（lint）を行う
       - run: npm run lint
 
-      # テストを実行（package.jsonのtestスクリプトを実行）
-      - run: npm test
+      # Jestでテストを実行
+      # ts-nodeを使ってTypeScript製のjest.config.tsを読み込めるように環境変数をセット
+      - name: Run tests
+        run: npm test
+        env:
+          NODE_OPTIONS: "--loader ts-node/esm"  # ts-nodeのESMローダーを有効化
