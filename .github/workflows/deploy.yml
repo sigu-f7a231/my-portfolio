@@ -1,40 +1,35 @@
-name: Deploy to GitHub Pages  # GitHub Pagesへの自動デプロイ
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # mainブランチへのpushで実行
+      - main
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest  # 最新のUbuntu環境で実行
+    runs-on: ubuntu-latest
 
     steps:
-      # リポジトリのコードをチェックアウト
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Node.js v18をセットアップ
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # npm依存関係をインストール
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # 高速で安定したインストール
 
-      # Next.jsアプリをビルド（静的ファイル生成）
       - name: Build static site
         run: npm run build
 
-      # 🔧 GitHub Pagesで Jekyll を無効化するためのファイルを追加
-      - name: Add .nojekyll to disable Jekyll on GitHub Pages
+      - name: Create .nojekyll file
         run: touch out/.nojekyll
 
-      # GitHub Pagesにデプロイ
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
+          enable_jekyll: false  # ⬅️ これを忘れずに！

@@ -5,10 +5,11 @@ const config: Config = {
   darkMode: 'class',
 
   content: [
-    './src/app/**/*.{js,ts,jsx,tsx}',
-    './src/pages/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}'
   ],
+
 
   theme: {
     extend: {
@@ -26,9 +27,7 @@ const config: Config = {
     },
   },
 
-  plugins: [
-    lineClamp, // ✅ ESMスタイルでimport済み
-  ],
+  plugins: [],
 };
 
 export default config;

@@ -1,23 +1,35 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",               // Next.js向けESモジュール設定
-    "moduleResolution": "bundler",   // Next.js推奨のモジュール解決方法
+    "module": "esnext", // Next.js向けESモジュール設定
+    "moduleResolution": "bundler", // Next.js推奨のモジュール解決方法
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",               // Next.jsがJSXを処理
+    "jsx": "preserve", // Next.jsがJSXを処理
     "incremental": true,
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "paths": {
-      "@/*": ["./src/*"]             // パスエイリアス設定
+      "@/*": [
+        "./src/*"
+      ] // パスエイリアス設定
     },
-    "types": ["@testing-library/jest-dom"]
+    "types": [
+      "@testing-library/jest-dom"
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -25,5 +37,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
