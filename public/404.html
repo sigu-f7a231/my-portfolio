@@ -1,0 +1,22 @@
+<!-- public/404.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>404 - Not Found</title>
+    <meta http-equiv="refresh" content="0; url=./">
+    <script>
+      // GitHub PagesでSPAルーティング対応させるためのハック
+      const redirect = sessionStorage.getItem('redirect');
+      if (!redirect) {
+        sessionStorage.setItem('redirect', location.pathname);
+        location.replace(location.origin + location.pathname.replace(/^\/[^/]+/, '') + location.search + location.hash);
+      } else {
+        sessionStorage.removeItem('redirect');
+      }
+    </script>
+  </head>
+  <body>
+    <h1>404 - Not Found</h1>
+  </body>
+</html>

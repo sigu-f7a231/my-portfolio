@@ -28,6 +28,10 @@ jobs:
       - name: Build static site
         run: npm run build
 
+      # 🔧 GitHub Pagesで Jekyll を無効化するためのファイルを追加
+      - name: Add .nojekyll to disable Jekyll on GitHub Pages
+        run: touch out/.nojekyll
+
       # GitHub Pagesにデプロイ
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
