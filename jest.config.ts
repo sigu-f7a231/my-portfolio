@@ -1,29 +1,32 @@
 import type { Config } from 'jest';
 
 const config: Config = {
+  // TypeScript を Jest で使うためのプリセット
   preset: 'ts-jest',
 
-  // Reactコンポーネントをテストするための仮想DOM環境
+  // ReactコンポーネントのテストでDOMを扱うための環境指定
   testEnvironment: 'jsdom',
 
-  // 各テスト前に setup ファイルを読み込む
+  // 各テスト実行前に読み込むセットアップファイル（例: カスタムマッチャーなど）
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
-  // ts/tsx ファイルは ts-jest を使って変換（推奨構文に更新）
+  // ts/tsx ファイルの変換設定
+  // Jest 実行時に tsconfig.jest.json を使うことでテスト専用のTypeScript設定を適用
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
+    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.jest.json' }],
   },
 
-  // node_modules 内のファイルは変換対象外（高速化）
+  // node_modules 内の変換はスキップ（パフォーマンス向上のため）
   transformIgnorePatterns: ['/node_modules/'],
 
-  // Jestが認識する拡張子
+  // Jest が認識する拡張子のリスト
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
 
-  // テストファイルのマッチパターン
+  // テストファイルのパターンを指定
   testMatch: ['<rootDir>/src/**/*.test.(ts|tsx)'],
 
-  // パスエイリアス（@/）に対応させる
+  // パスエイリアス対応設定
+  // 例: import xyz from '@/components/xyz' を解決できるようにする
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },

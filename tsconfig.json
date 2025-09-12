@@ -1,43 +1,43 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2017",                // 出力するJavaScriptのバージョン
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "dom",                         // ブラウザのDOM APIを使う
+      "dom.iterable",                // DOMで反復可能なものも対象に
+      "esnext"                      // 最新のES機能を含む
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext", // Next.js向けESモジュール設定
-    "moduleResolution": "bundler", // Next.js推奨のモジュール解決方法
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
+    "allowJs": true,                 // JavaScriptファイルのコンパイルも許可
+    "skipLibCheck": true,            // ライブラリの型チェックをスキップして高速化
+    "strict": true,                  // 厳格な型チェックを有効化
+    "noEmit": true,                  // コンパイル結果のJSファイルを出力しない（Next.jsが処理）
+    "esModuleInterop": true,         // CommonJSとESモジュールの相互運用をスムーズに
+    "module": "esnext",              // ESモジュール形式を利用（Next.js推奨）
+    "moduleResolution": "bundler",  // Next.js推奨のモジュール解決方式
+    "resolveJsonModule": true,       // JSONファイルをインポート可能に
+    "isolatedModules": true,         // ファイル毎に独立したコンパイルを強制
+    "jsx": "preserve",               // JSX構文を変換せずに残す（Next.jsで処理）
+    "incremental": true,             // 増分ビルドを有効化し高速化
     "plugins": [
       {
-        "name": "next"
+        "name": "next"              // Next.js用の型チェックプラグイン
       }
     ],
     "paths": {
       "@/*": [
-        "./src/*"
-      ] // パスエイリアス設定
+        "./src/*"                   // @/ で src/ 以下を参照できるエイリアス設定
+      ]
     },
     "types": [
-      "@testing-library/jest-dom"
+      "@testing-library/jest-dom"    // 型定義を追加（Jest用のカスタムマッチャー）
     ]
   },
   "include": [
-    "next-env.d.ts",
+    "next-env.d.ts",                 // Next.jsの型定義ファイルを含める
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts"            // Next.jsが生成する型定義を含める
   ],
   "exclude": [
-    "node_modules"
+    "node_modules"                  // node_modulesは除外
   ]
 }
