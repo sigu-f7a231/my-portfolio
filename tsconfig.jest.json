@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",           // 基本は開発用設定を継承
+  "compilerOptions": {
+    "module": "commonjs",                 // Jestに合わせてCommonJSモジュールに変更
+    "moduleResolution": "node",           // Node.js互換のモジュール解決
+    "jsx": "react-jsx"                    // Jestでテスト実行しやすいJSX変換方式
+  }
+}

@@ -1,26 +1,32 @@
 import type { Config } from 'jest';
 
-// Jestの設定をTypeScriptで定義
 const config: Config = {
-  // ts-jestをpresetとして使い、TypeScriptをそのままJestで処理できるように設定
   preset: 'ts-jest',
 
-  // テスト環境をブラウザに近いjsdomに設定（Reactのテストなどに必要）
+  // Reactコンポーネントをテストするための仮想DOM環境
   testEnvironment: 'jsdom',
 
-  // テスト実行前に読み込むセットアップファイル（ここでカスタムマッチャーなどを追加可能）
+  // 各テスト前に setup ファイルを読み込む
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
-  // ts/tsxファイルの変換はts-jestに任せる設定
+  // ts/tsx ファイルは ts-jest を使って変換（推奨構文に更新）
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
   },
 
-  // モジュールとして認識する拡張子（ここに書いた拡張子のファイルをテスト対象として認識）
+  // node_modules 内のファイルは変換対象外（高速化）
+  transformIgnorePatterns: ['/node_modules/'],
+
+  // Jestが認識する拡張子
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
 
-  // テストファイルのパターン（srcフォルダ以下で、.test.tsまたは.test.tsxで終わるファイルをテスト対象に）
+  // テストファイルのマッチパターン
   testMatch: ['<rootDir>/src/**/*.test.(ts|tsx)'],
+
+  // パスエイリアス（@/）に対応させる
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
 };
 
 export default config;

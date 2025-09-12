@@ -1,17 +1,33 @@
-@import "tailwindcss";
+/* Tailwind CSS の基本スタイル・コンポーネント・ユーティリティをインポート */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
+/* ----------------------------------------------
+   グローバルで使用するカスタム CSS 変数を定義
+------------------------------------------------- */
+
+/* ライトモードの色変数 */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --background: #ffffff;  /* 背景色（ライト） */
+  --foreground: #171717;  /* 文字色（ライト） */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Google Fonts のカスタム変数 */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+/* ----------------------------------------------
+   ダークモード時はクラス "dark" を使いCSS変数を上書き
+------------------------------------------------- */
+.dark {
+  --background: #0a0a0a;  /* 背景色（ダーク） */
+  --foreground: #ededed;  /* 文字色（ダーク） */
+}
+
+/* ----------------------------------------------
+   ユーザーのOS設定に合わせたダークモード対応（CSSのみの初期対応）
+------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,8 +35,25 @@
   }
 }
 
+/* ----------------------------------------------
+   body要素の基本スタイル
+
+   - CSS変数を使って背景色・文字色を設定
+   - Tailwindのユーティリティも @apply で併用し、安定的に色を切り替え
+   - フォントはGoogle Fontsのカスタム変数を使用
+   - 色変化はスムーズにtransition
+------------------------------------------------- */
 body {
+  /* Tailwindのユーティリティを @apply で付与 */
+  @apply bg-white text-black dark:bg-gray-900 dark:text-white;
+
+  /* CSS変数を使った背景・文字色指定 */
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  /* フォント設定 */
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+
+  /* 色変化のトランジション */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
