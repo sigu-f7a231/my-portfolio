@@ -5,11 +5,11 @@ const config: Config = {
   darkMode: 'class',
 
   content: [
-    './src/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}',        // もしappディレクトリを使っていれば必須
+    './src/**/*.{js,ts,jsx,tsx}',        // srcがなければ削除してOK
     './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}'
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
-
 
   theme: {
     extend: {
@@ -27,7 +27,7 @@ const config: Config = {
     },
   },
 
-  plugins: [],
+  plugins: [lineClamp],
 };
 
 export default config;
