@@ -22,9 +22,8 @@ jobs:
         run: npm ci
 
       - name: Build static site
-        run: |
-          npm run build
-          npm run export
+        run: npm run build
+
 
       - name: Create .nojekyll file
         run: touch out/.nojekyll
