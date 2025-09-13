@@ -2,9 +2,14 @@
 
 ## はじめに
 
-このポートフォリオサイトは、最新のWeb技術を用いて制作しました。  
-シンプルで高速、かつメンテナンス性の高い設計を目指しています。  
-GitHub Pagesを使った静的ホスティングで、CI/CDも自動化しています。
+
+このポートフォリオサイトは、Next.jsとTailwind CSSで作成し、
+表示が速く管理しやすい設計を心がけています。
+
+サイトはGitHub Pagesで公開し、
+テストやビルド、デプロイはGitHub Actionsを使ったCI/CDで自動化しています。
+ß
+今後も機能追加や改善を続けていきます。
 
 ## 目次
 
@@ -33,37 +38,42 @@ GitHub Pagesを使った静的ホスティングで、CI/CDも自動化してい
 
 ---
 
-## 技術スタック
+## 🛠 技術スタック
 
-###  フロントエンド
+### フロントエンド
 
-| 項目      | 使用技術・ツール                                      | 説明                                   |
-| ------- | --------------------------------------------- | ------------------------------------ |
-| フレームワーク | [Next.js](https://nextjs.org/)                | React ベース。App RouterとSSG（静的サイト生成）対応。 |
-| 言語      | [TypeScript](https://www.typescriptlang.org/) | 型安全な JavaScript 拡張言語で、保守性と信頼性向上。     |
-| スタイリング  | [Tailwind CSS](https://tailwindcss.com/)      | ユーティリティファーストの CSS フレームワーク。           |
+| 項目         | 使用技術・ツール         | 説明                                                                  |
+|--------------|--------------------------|-----------------------------------------------------------------------|
+| フレームワーク | Next.js (App Router)     | React ベース。App Router + SSG（静的サイト生成）に完全対応           |
+| 言語         | TypeScript               | 型安全な JavaScript 拡張で、保守性と信頼性が向上                     |
+| スタイリング | Tailwind CSS             | ユーティリティファーストの CSS フレームワーク                         |
+
+---
 
 ### テスト・品質管理
 
-| 項目      | 使用技術・ツール                                                                     | 説明                             |
-| ------- | ---------------------------------------------------------------------------- | ------------------------------ |
-| ユニットテスト | [Jest](https://jestjs.io/), [ts-jest](https://kulshekhar.github.io/ts-jest/) | TypeScript 用のテストランナー + トランスパイラ |
-| DOMテスト  | [Testing Library](https://testing-library.com/)                              | UI コンポーネントの振る舞いを確認             |
-| 静的解析    | [ESLint](https://eslint.org/)                                                | コードスタイルとバグの早期発見のための静的解析ツール     |
+| 項目         | 使用技術・ツール            | 説明                                                                  |
+|--------------|-----------------------------|-----------------------------------------------------------------------|
+| ユニットテスト | Jest, ts-jest               | TypeScript 用のテストランナー + トランスパイラ                        |
+| DOMテスト     | Testing Library             | UI コンポーネントの振る舞いをユーザー視点でテスト                     |
+| 静的解析     | ESLint                      | コードスタイルとバグの早期発見のための静的解析ツール                  |
 
+---
 
 ### ビルド・デプロイ
 
-| 項目   | 使用技術・ツール                                                                                      | 説明                              |
-| ---- | --------------------------------------------------------------------------------------------- | ------------------------------- |
-| ビルド  | [Next.js](https://nextjs.org/) (`next build`, `next export`)                                  | 静的ファイル (`out/`) の出力             |
-| デプロイ | [gh-pages](https://www.npmjs.com/package/gh-pages), [GitHub Pages](https://pages.github.com/) | `out/` ディレクトリを GitHub Pages に公開 |
+| 項目       | 使用技術・ツール                        | 説明                                                                  |
+|------------|-----------------------------------------|-----------------------------------------------------------------------|
+| ビルド      | Next.js (`output: 'export'`)           | `next.config.ts` に指定。`next build` だけで静的ファイルを生成         |
+| デプロイ    | GitHub Pages + peaceiris/actions-gh-pages | `out/` ディレクトリを GitHub Pages に公開                             |
+
+---
 
 ### CI/CD・自動化
 
-| 項目  | 使用技術・ツール                                              | 説明                      |
-| --- | ----------------------------------------------------- | ----------------------- |
-| 自動化 | [GitHub Actions](https://github.com/features/actions) | テスト、Lint、ビルド、デプロイを自動で実行 |
+| 項目     | 使用技術・ツール  | 説明                                                                 |
+|----------|-------------------|----------------------------------------------------------------------|
+| 自動化   | GitHub Actions    | push 時に Lint → Build → Export → GitHub Pages へ自動デプロイ       |
 
 
 ### バックエンド（※現在は未使用）
@@ -142,41 +152,52 @@ npm run build
 ## ディレクトリ構成
 ```text
 my-portfolio/
-├── .github/workflows/            # GitHub Actions の設定
-│   ├── ci.yml                    # テスト & Lint の自動実行
-│   └── deploy.yml                # GitHub Pages への自動デプロイ
+├── .github/
+│   └── workflows/
+│       ├── ci.yml               # テスト & Lint の自動実行
+│       └── deploy.yml           # GitHub Pages への自動デプロイ
 │
-├── .next/                        # Next.js のビルド成果物（自動生成）
-├── out/                          # 静的ファイル出力ディレクトリ（SSG後の成果物）
+├── .next/                       # Next.js のビルド成果物（自動生成）
+├── out/                         # 静的ファイル出力ディレクトリ（SSG後の成果物）
 │
-├── public/                       # 静的ファイル（画像やアイコン）
+├── public/                      # 静的ファイル（画像やアイコンなど）
 │   ├── file.svg
 │   ├── vercel.svg
 │   ├── next.svg
 │   ├── globe.svg
 │   └── window.svg
 │
-├── src/                          # アプリケーションのソースコード
-│   ├── app/                      # App Router 用のページ・レイアウト
-│   │   ├── favicon.ico           # サイトアイコン
-│   │   ├── layout.tsx            # 全体レイアウト
-│   │   ├── page.tsx              # トップページ（ルート）
-│   │   └── globals.css           # グローバルスタイル（Tailwind 設定含む）
-│   │
-│   └── __tests__/                # テストディレクトリ
-│       └── sample.test.tsx       # テストサンプル（Jest + Testing Library）
+├── src/                         # ソースコード
+│   ├── app/                     # App Router のルート構成
+│   │   ├── about/               # About ページ
+│   │   │   └── page.tsx
+│   │   ├── contact/             # Contact ページ
+│   │   │   └── page.tsx
+│   │   ├── works/               # Works ページ
+│   │   │   └── page.tsx
+│   │   ├── components/          # UI コンポーネント（Header など）
+│   │   │   └── Header.tsx
+│   │   ├── favicon.ico          # ファビコン
+│   │   ├── layout.tsx           # 全体レイアウト
+│   │   ├── page.tsx             # トップページ
+│   │   └── globals.css          # グローバルスタイル（Tailwind 設定含む）
 │
-├── .gitignore                    # Git で無視するファイル一覧
-├── eslint.config.mjs            # ESLint 設定ファイル（モジュール形式）
-├── jest.config.ts               # Jest 設定ファイル（TypeScript）
-├── jest.setup.ts                # Jest のセットアップファイル
-├── next.config.ts               # Next.js のカスタム設定（SSG, basePath など）
-├── next-env.d.ts                # Next.js による型定義（自動生成）
-├── package.json                 # プロジェクト設定・依存関係・スクリプト
-├── package-lock.json            # npm の依存関係ロックファイル
-├── postcss.config.mjs           # Tailwind 用の PostCSS 設定
-├── tsconfig.json                # TypeScript のコンパイラ設定
-└── README.md                    # このプロジェクトの説明ファイル
+│   └── __tests__/               # テストコード
+│       └── sample.test.tsx      # テストサンプル（Jest + Testing Library）
+│
+├── .gitignore                   # Git で無視するファイル定義
+├── eslint.config.mjs           # ESLint 設定
+├── jest.config.ts              # Jest 設定
+├── jest.setup.ts               # Jest の初期設定
+├── next.config.ts              # Next.js のカスタム設定（basePath など）
+├── next-env.d.ts               # Next.js による型定義（自動生成）
+├── package.json                # プロジェクト設定・依存関係・スクリプト
+├── package-lock.json           # npm の依存関係ロック
+├── postcss.config.mjs          # PostCSS 設定（Tailwind用）
+├── tailwind.config.ts          # Tailwind CSS の設定
+├── tsconfig.json               # TypeScript のコンパイラ設定
+└── README.md                   # プロジェクトの概要と構成
+
 
 ```
 
