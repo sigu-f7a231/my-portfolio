@@ -33,7 +33,7 @@
 
 ## サイトURL
 
-[https://sigu-f7a231.github.io/portfolio-site/](https://sigu-f7a231.github.io/portfolio-site/)
+[https://sigu-f7a231.github.io/my-portfolio/](https://sigu-f7a231.github.io/my-portfolio/)
 
 ---
 
