@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
+import Header from "../components/Header/Header";
 
 // Google Fonts（Geist Sans / Geist Mono）をカスタムCSS変数として読み込み
 const geistSans = Geist({

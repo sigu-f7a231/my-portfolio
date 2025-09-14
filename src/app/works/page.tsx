@@ -1,126 +1,58 @@
-'use client';
+'use client'; // クライアントコンポーネントとして動作（useState/useEffect 使用可能）
 
 import { useState } from 'react';
-import { works, Work } from '@/data/works';
+import { works, Work } from '@/data/works'; // データと型定義のインポート
+import WorkCard from '@/components/Work/WorkCard'; // ワーク表示用のカードコンポーネント
+import WorkModal from '@/components/Work/WorkModal'; // 詳細表示用のモーダルコンポーネント
+import WorkTagFilter from '@/components/Work/WorkTagFilter'; // タグフィルターUI
 
 export default function WorksPage() {
+  // 全てのタグを一意に抽出しリスト化
   const allTags = Array.from(new Set(works.flatMap((work) => work.tags)));
 
+  // 選択されたタグ（フィルター状態）を保持
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [selectedWork, setSelectedWork] = useState<Work | null>(null); // ← モーダル用
 
+  // モーダルで表示する選択されたワーク（詳細情報）
+  const [selectedWork, setSelectedWork] = useState<Work | null>(null);
+
+  // タグをクリックしたときの切り替え処理
   const toggleTag = (tag: string) => {
+    // すでに選択中のタグを再度クリックしたら解除、それ以外なら選択
     setSelectedTag((prev) => (prev === tag ? null : tag));
   };
 
-  const filteredWorks =
-    selectedTag === null
-      ? works
-      : works.filter((work) => work.tags.includes(selectedTag));
-
-  // モーダルを閉じる処理
-  const closeModal = () => setSelectedWork(null);
+  // 選択されたタグに基づいてフィルターしたワーク一覧
+  const filteredWorks = selectedTag
+    ? works.filter((work) => work.tags.includes(selectedTag))
+    : works;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
-      {/* タグのフィルター */}
-      <div className="flex flex-wrap gap-2">
-        {allTags.map((tag) => (
-          <button
-            key={tag}
-            onClick={() => toggleTag(tag)}
-            className={`px-3 py-1 text-sm rounded-full border transition 
-              ${selectedTag === tag
-                ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-white dark:bg-gray-700 dark:text-white border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600'}
-            `}
-          >
-            {tag}
-          </button>
-        ))}
-      </div>
+      {/* タグフィルター（コンポーネント化） */}
+      <WorkTagFilter
+        tags={allTags}                 // 表示する全タグ
+        selectedTag={selectedTag}     // 現在選択されているタグ
+        onToggle={toggleTag}          // タグの選択/解除処理
+      />
 
-      {/* ワークカードのリスト */}
+      {/* ワークカードの一覧表示 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {filteredWorks.map((work) => (
-          <div
+          <WorkCard
             key={work.id}
-            onClick={() => setSelectedWork(work)}
-            className="cursor-pointer border rounded-lg p-4 shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700 hover:shadow-md transition"
-          >
-            <h3 className="text-lg font-semibold mb-2">{work.title}</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-              {work.description}
-            </p>
-
-            <div className="flex flex-wrap gap-1 mb-2">
-              {work.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs px-2 py-0.5 bg-gray-200 dark:bg-gray-600 rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {work.url && (
-              <span className="inline-block mt-2 text-blue-600 dark:text-blue-400 text-sm">
-                詳細を見る →
-              </span>
-            )}
-          </div>
+            work={work}                        // 各ワークのデータ
+            onClick={() => setSelectedWork(work)} // カードクリックでモーダル表示
+          />
         ))}
       </div>
 
-      {/* モーダル */}
+      {/* モーダル（選択されたワークがあるときのみ表示） */}
       {selectedWork && (
-        <div
-          onClick={closeModal}
-          className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
-        >
-          {/* モーダルの内容自体には click を伝播させない */}
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md w-full relative shadow-lg transition"
-          >
-            {/* 閉じるボタン */}
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 text-xl"
-              aria-label="Close Modal"
-            >
-              ×
-            </button>
-
-            <h2 className="text-xl font-bold mb-2">{selectedWork.title}</h2>
-            <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-              {selectedWork.description}
-            </p>
-
-            <div className="flex flex-wrap gap-2 mb-4">
-              {selectedWork.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs px-2 py-0.5 bg-gray-300 dark:bg-gray-700 rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {selectedWork.url && (
-              <a
-                href={selectedWork.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-blue-600 dark:text-blue-400 hover:underline text-sm"
-              >
-                公開ページを見る ↗
-              </a>
-            )}
-          </div>
-        </div>
+        <WorkModal
+          work={selectedWork}             // 表示する詳細データ
+          onClose={() => setSelectedWork(null)} // モーダルを閉じる処理
+        />
       )}
     </div>
   );

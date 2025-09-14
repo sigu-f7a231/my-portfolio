@@ -2,15 +2,17 @@
 
 // Work の型定義
 export type Work = {
-  id: number;
-  title: string;
-  description: string;
-  tags: string[];     // 複数タグが付けられる配列型
-  image?: string;     // 画像パス（今回は省略可能にしておく）
-  url?: string;       // 公開ページへのリンク
+  id: number;              // 一意なID
+  title: string;           // 作品タイトル
+  description: string;     // 説明文
+  tags: string[];          // 複数のタグ（カテゴリー）を表す配列
+  image?: string;          // 画像パス（省略可能）
+  url?: string;            // 公開ページへのリンク（省略可能）
 };
 
-// ダミーデータ定義（すべての項目が Work 型に合致）
+// ダミーデータの配列
+// 実際のアプリではAPIやCMSから取得することもあるが、
+// 小規模プロジェクトや開発初期段階ではローカル定義で管理
 export const works: Work[] = [
   {
     id: 1,

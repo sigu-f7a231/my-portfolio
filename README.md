@@ -7,8 +7,7 @@
 表示が速く管理しやすい設計を心がけています。
 
 サイトはGitHub Pagesで公開し、
-テストやビルド、デプロイはGitHub Actionsを使ったCI/CDで自動化しています。
-ß
+テスト・ビルド・デプロイはGitHub Actionsを使ったCI/CDで自動化しています。
 今後も機能追加や改善を続けていきます。
 
 ## 目次
@@ -134,19 +133,23 @@ npm run lint
 npm test
 
 # 静的ビルド（GitHub Pages 用）
-npm run build
+npm run deploy
 ```
 
 
 ## スクリプト一覧
-| スクリプト            | 説明                                                            |
-| ---------------- | ------------------------------------------------------------- |
-| `npm run dev` | 開発モードでアプリを起動（[http://localhost:3000](http://localhost:3000)） |
-| `npm run build`  | 本番ビルド（静的サイト出力）                                                |
-| `npm run start`  | ビルド済みアプリの起動                                                   |
-| `npm run lint`   | ESLint による静的解析                                                |
-| `npm test`       | Jest によるテスト実行                                                 |
-| `npm run deploy` | ビルド後、GitHub Pages にデプロイ（`gh-pages` 使用）                        |
+| スクリプト                | 説明                                                              |
+| -------------------- | --------------------------------------------------------------- |
+| `npm run dev`        | 開発モードでアプリを起動（[http://localhost:3000](http://localhost:3000)）    |
+| `npm run build`      | 本番ビルド（Next.jsのビルド）                                              |
+| `npm run export`     | 静的ファイル出力（`out/` ディレクトリ生成）                                       |
+| `npm run start`      | ビルド済みアプリの起動                                                     |
+| `npm run lint`       | ESLint による静的解析                                                  |
+| `npm test`           | Jest によるテスト実行                                                   |
+| `npm run test:watch` | Jest を監視モードで実行                                                  |
+| `npm run deploy`     | `build` → `export` を連続実行し、静的ファイルを生成（GitHub Pages へ手動またはCIでデプロイ） |
+| `npm run tw-init`    | Tailwind CSS の初期設定ファイルを生成                                       |
+
 
 
 ## ディレクトリ構成
@@ -168,35 +171,51 @@ my-portfolio/
 │   └── window.svg
 │
 ├── src/                         # ソースコード
-│   ├── app/                     # App Router のルート構成
-│   │   ├── about/               # About ページ
+│   ├── app/                     # App Router のルート構成（ページ単位）
+│   │   ├── about/               # Aboutページ
 │   │   │   └── page.tsx
-│   │   ├── contact/             # Contact ページ
+│   │   ├── contact/             # Contactページ
 │   │   │   └── page.tsx
-│   │   ├── works/               # Works ページ
+│   │   ├── works/               # Worksページ
 │   │   │   └── page.tsx
-│   │   ├── components/          # UI コンポーネント（Header など）
-│   │   │   └── Header.tsx
 │   │   ├── favicon.ico          # ファビコン
 │   │   ├── layout.tsx           # 全体レイアウト
 │   │   ├── page.tsx             # トップページ
-│   │   └── globals.css          # グローバルスタイル（Tailwind 設定含む）
+│   │   └── globals.css          # グローバルスタイル（Tailwind設定含む）
 │
+│   ├── components/              # UIコンポーネント群（ページから共通利用）
+│   │   ├── Contact/             # Contact用コンポーネント
+│   │   │   ├── ContactList.tsx
+│   │   │   └── ContactListItem.tsx
+│   │   │
+│   │   ├── Header/              # ヘッダーコンポーネント
+│   │   │   └── Header.tsx
+│   │   │
+│   │   └── Work/                # Work関連コンポーネント
+│   │       ├── WorkCard.tsx
+│   │       ├── WorkModal.tsx
+│   │       └── WorkTagFilter.tsx
+│   │
+│   ├── data/                    # データ定義（型＆ダミーデータ）
+│   │   ├── contactItems.ts      # Contact用データ定義
+│   │   └── works.ts             # Work用データ定義
+│   │
 │   └── __tests__/               # テストコード
 │       └── sample.test.tsx      # テストサンプル（Jest + Testing Library）
 │
-├── .gitignore                   # Git で無視するファイル定義
-├── eslint.config.mjs           # ESLint 設定
-├── jest.config.ts              # Jest 設定
-├── jest.setup.ts               # Jest の初期設定
-├── next.config.ts              # Next.js のカスタム設定（basePath など）
-├── next-env.d.ts               # Next.js による型定義（自動生成）
-├── package.json                # プロジェクト設定・依存関係・スクリプト
-├── package-lock.json           # npm の依存関係ロック
-├── postcss.config.mjs          # PostCSS 設定（Tailwind用）
-├── tailwind.config.ts          # Tailwind CSS の設定
-├── tsconfig.json               # TypeScript のコンパイラ設定
-└── README.md                   # プロジェクトの概要と構成
+├── .gitignore                   # Gitで無視するファイル定義
+├── eslint.config.mjs            # ESLint設定
+├── jest.config.ts               # Jest設定
+├── jest.setup.ts                # Jest初期設定
+├── next.config.ts               # Next.jsカスタム設定
+├── next-env.d.ts                # Next.js型定義（自動生成）
+├── package.json                 # プロジェクト設定・依存関係・スクリプト
+├── package-lock.json            # npm依存関係ロック
+├── postcss.config.mjs           # PostCSS設定（Tailwind用）
+├── tailwind.config.ts           # Tailwind CSS設定
+├── tsconfig.json                # TypeScriptコンパイラ設定
+└── README.md                   # プロジェクト概要＆構成
+
 
 
 ```
